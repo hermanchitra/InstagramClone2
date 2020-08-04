@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnSignup.setOnClickListener(this);
 
         if (ParseUser.getCurrentUser() != null) {
-            ParseUser.logOut();
+            transitionToSocialMediaActivity();
         }
     }
 
@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         public void done(ParseUser user, ParseException e) {
                             if (e == null && user != null) {
                                 FancyToast.makeText(LoginActivity.this, "Login Successful", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
+                                transitionToSocialMediaActivity();
                             } else {
                                 FancyToast.makeText(LoginActivity.this, "Login Failed.\n" + e.getLocalizedMessage(), FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
                             }
@@ -70,5 +71,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void transitionToSocialMediaActivity() {
+        Intent intent = new Intent(LoginActivity.this, SocialMediaActivity.class);
+        startActivity(intent);
     }
 }

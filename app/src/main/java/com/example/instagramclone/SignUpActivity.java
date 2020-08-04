@@ -35,6 +35,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         btnLogin.setOnClickListener(this);
         btnSignup.setOnClickListener(this);
 
+        if (ParseUser.getCurrentUser() != null){
+            transitionToSocialMediaActivity();
+        }
+
         edtPassword.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
@@ -44,6 +48,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 return false;
             }
         });
+
+
     }
 
     @Override
@@ -66,6 +72,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         public void done(ParseException e) {
                             if (e == null) {
                                 FancyToast.makeText(SignUpActivity.this, "Sign Up Successful", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
+                                transitionToSocialMediaActivity();
                             } else {
                                 FancyToast.makeText(SignUpActivity.this, "Sign Up Failed.\n" + e.getLocalizedMessage(), FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
                             }
@@ -88,5 +95,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void transitionToSocialMediaActivity() {
+        Intent intent = new Intent(SignUpActivity.this, SocialMediaActivity.class);
+        startActivity(intent);
     }
 }
